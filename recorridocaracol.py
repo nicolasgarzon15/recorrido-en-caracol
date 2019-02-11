@@ -49,4 +49,4 @@ def resolver(lab):
     moverDer(crear_matriz2([],lab),0,0,0,len(crear_matriz2([],lab)))
     
           
-resolver("matriz4.txt") 
+resolver("arreglo.txt") 
