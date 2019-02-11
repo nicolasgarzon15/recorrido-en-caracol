@@ -1,44 +1,52 @@
-import numpy as np
-from io import StringIO
+def cargar_archivo(lab):
+        return open(lab)
 
-pfile=open('arreglo','r')
-data=pfile.read()
-pfile.close()
-data=np.genfromtxt(StringIO(data), delimiter  = ',' )
+def moverDer(mat,fil,col,aux,tam):
+    if(tam>0):
+        if(aux<tam):
+            print(mat[fil][col])
+            moverDer(mat,fil,col+1,aux+1,tam)
+        if(aux==tam):
+            moverAba(mat,fil+1,col-1,0,tam-1)
+    else:
+        print("Final")
 
-x= list(data.shape)
-filas=x[0]
-columnas=x[1]
-sup=0
-izq=0
-der=columnas
-inf=filas
-numeros=[]
+def moverAba(mat,fil,col,aux,tam):
+    if(tam>0):
+        if(aux<tam):
+            print(mat[fil][col])
+            moverAba(mat,fil+1,col,aux+1,tam)
+        if(aux==tam):
+            moverIzq(mat,fil-1,col-1,0,tam)
+    else:
+        print("Final")
+def moverIzq(mat,fil,col,aux,tam):
+    if(tam>0):
+        if(aux<tam):
+            print(mat[fil][col])
+            moverIzq(mat,fil,col-1,aux+1,tam)
+        if(aux==tam):
+            moverArr(mat,fil-1,col+1,0,tam-1)
+    else:
+        print("Final")
+        
+def moverArr(mat,fil,col,aux,tam):
+    if(tam>0):
+        if(aux<tam):
+            print(mat[fil][col])
+            moverArr(mat,fil-1,col,aux+1,tam)
+        if(aux==tam):
+            moverDer(mat,fil+1,col+1,0,tam)
+    else:
+        print("Final")
 
-print(data)
-print(filas)
-print(columnas)
+def crear_matriz2(mat,lab):
+    for x in cargar_archivo(lab):
+        mat.append(x.strip().split())
+    return mat
 
-while sup < inf or izq < der :
-    i=inf-1
-    j=der-1
-
-    while j>izq:
-        numeros.append(data[i][j])
-        j=j-1
-    while i>sup:
-        numeros.append(data[i][j])
-        i=i-1
-    while j<der-1:
-        numeros.append(data[i][j])
-        j=j+1
-    while i<inf-1:
-        numeros.append(data[i][j])
-        i=i+1
-
-    izq=izq+1
-    sup=sup+1
-    der=der-1
-    inf=inf-1
-
-print(numeros)
+def resolver(lab):
+    moverDer(crear_matriz2([],lab),0,0,0,len(crear_matriz2([],lab)))
+    
+          
+resolver("matriz4.txt") 
